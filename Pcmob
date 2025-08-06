@@ -1,0 +1,85 @@
+--Made By Silas  
+local a,b,c=game:GetService("Players"),game:GetService("UserInputService"),game:GetService("ReplicatedStorage")  
+local d=a.LocalPlayer  
+local e=d:GetMouse()  
+local f=c:FindFirstChild("MovePlayer") or c:FindFirstChild("RequestMovement")  
+local g=false  
+local h=Instance.new("ScreenGui")  
+h.Name="SilasTeleportGUI"  
+h.IgnoreGuiInset=true  
+h.ResetOnSpawn=false  
+h.Parent=d:WaitForChild("PlayerGui")  
+local i=Instance.new("TextButton")  
+i.Size=UDim2.new(0,140,0,50)  
+i.Position=UDim2.new(1,-150,1,-60)  
+i.AnchorPoint=Vector2.new(0,0)  
+i.BackgroundColor3=Color3.new(0,0,0)  
+i.Text=""  
+i.Font=Enum.Font.Arcade  
+i.TextScaled=true  
+i.Parent=h  
+i.Active=true  
+i.Draggable=true  
+local j=Instance.new("TextLabel")  
+j.Size=UDim2.new(1,0,0.65,0)  
+j.Position=UDim2.new(0,0,0,0)  
+j.BackgroundTransparency=1  
+j.Text="Teleport"  
+j.TextColor3=Color3.new(1,1,1)  
+j.Font=Enum.Font.Arcade  
+j.TextScaled=true  
+j.Parent=i  
+--Made By Silas  
+local k=Instance.new("TextLabel")  
+k.Size=UDim2.new(1,0,0.35,0)  
+k.Position=UDim2.new(0,0,0.65,0)  
+k.BackgroundTransparency=1  
+k.Text="Made by Silas"  
+k.TextColor3=Color3.fromRGB(150,150,150)  
+k.TextScaled=true  
+k.Font=Enum.Font.Gotham  
+k.Parent=i  
+local l=nil  
+i.InputBegan:Connect(function(m)  
+	if m.UserInputType==Enum.UserInputType.MouseButton1 or m.UserInputType==Enum.UserInputType.Touch then  
+		l=m.Position  
+	end  
+end)  
+i.InputEnded:Connect(function(m)  
+	if l and (m.UserInputType==Enum.UserInputType.MouseButton1 or m.UserInputType==Enum.UserInputType.Touch) then  
+		local n=m.Position  
+		if (n-l).Magnitude<5 then  
+			g=not g  
+			j.Text=g and "Tap to Teleport" or "Teleport"  
+		end  
+		l=nil  
+	end  
+end)  
+local function o()  
+	return Vector3.new(0,2.5+math.random()*2,0)  
+end  
+local function p(q)  
+	local r=d.Character  
+	if not r then return end  
+	local s=r:FindFirstChild("HumanoidRootPart")  
+	if not s then return end  
+	local t=q+o()  
+	if f then  
+		f:FireServer(t)  
+	else  
+		s.CFrame=CFrame.new(t)  
+	end  
+end  
+b.InputBegan:Connect(function(u,v)  
+	if v then return end  
+	if u.UserInputType==Enum.UserInputType.Keyboard and u.KeyCode==Enum.KeyCode.M then  
+		if e.Hit then p(e.Hit.Position) end  
+	end  
+	if g and (u.UserInputType==Enum.UserInputType.MouseButton1 or u.UserInputType==Enum.UserInputType.Touch) then  
+		if e.Hit then p(e.Hit.Position) end  
+		g=false  
+		j.Text="Teleport"  
+	end  
+end)  
+--Made By Silas
+
