@@ -1,85 +1,108 @@
---Made By Silas  
-local a,b,c=game:GetService("Players"),game:GetService("UserInputService"),game:GetService("ReplicatedStorage")  
-local d=a.LocalPlayer  
-local e=d:GetMouse()  
-local f=c:FindFirstChild("MovePlayer") or c:FindFirstChild("RequestMovement")  
+--made by silas  
+local a,b,c=game:getservice("players"),game:getservice("userinputservice"),game:getservice("replicatedstorage")  
+local d=a.localplayer  
+local e=d:getmouse()  
+local f=c:findfirstchild("moveplayer") or c:findfirstchild("requestmovement")  
 local g=false  
-local h=Instance.new("ScreenGui")  
-h.Name="SilasTeleportGUI"  
-h.IgnoreGuiInset=true  
-h.ResetOnSpawn=false  
-h.Parent=d:WaitForChild("PlayerGui")  
-local i=Instance.new("TextButton")  
-i.Size=UDim2.new(0,140,0,50)  
-i.Position=UDim2.new(1,-150,1,-60)  
-i.AnchorPoint=Vector2.new(0,0)  
-i.BackgroundColor3=Color3.new(0,0,0)  
-i.Text=""  
-i.Font=Enum.Font.Arcade  
-i.TextScaled=true  
-i.Parent=h  
-i.Active=true  
-i.Draggable=true  
-local j=Instance.new("TextLabel")  
-j.Size=UDim2.new(1,0,0.65,0)  
-j.Position=UDim2.new(0,0,0,0)  
-j.BackgroundTransparency=1  
-j.Text="Teleport"  
-j.TextColor3=Color3.new(1,1,1)  
-j.Font=Enum.Font.Arcade  
-j.TextScaled=true  
-j.Parent=i  
---Made By Silas  
-local k=Instance.new("TextLabel")  
-k.Size=UDim2.new(1,0,0.35,0)  
-k.Position=UDim2.new(0,0,0.65,0)  
-k.BackgroundTransparency=1  
-k.Text="Made by Silas"  
-k.TextColor3=Color3.fromRGB(150,150,150)  
-k.TextScaled=true  
-k.Font=Enum.Font.Gotham  
-k.Parent=i  
-local l=nil  
-i.InputBegan:Connect(function(m)  
-	if m.UserInputType==Enum.UserInputType.MouseButton1 or m.UserInputType==Enum.UserInputType.Touch then  
-		l=m.Position  
+local h=instance.new("screengui")  
+h.name="silasteleportgui"  
+h.ignoreguiinset=true  
+h.resetonspawn=false  
+h.parent=d:waitforchild("playergui")  
+local i=instance.new("textbutton")  
+i.size=udim2.new(0,140,0,50)  
+i.position=udim2.new(1,-150,1,-60)  
+i.anchorpoint=vector2.new(0,0)  
+i.backgroundcolor3=color3.new(0,0,0)  
+i.text=""  
+i.font=enum.font.arcade  
+i.textscaled=true  
+i.parent=h  
+i.active=true  
+i.draggable=true  
+local j=instance.new("textlabel")  
+j.size=udim2.new(1,0,0.65,0)  
+j.position=udim2.new(0,0,0,0)  
+j.backgroundtransparency=1  
+j.text="teleport"  
+j.textcolor3=color3.new(1,1,1)  
+j.font=enum.font.arcade  
+j.textscaled=true  
+j.parent=i  
+--made by silas  
+local k=instance.new("textlabel")  
+k.size=udim2.new(1,0,0.35,0)  
+k.position=udim2.new(0,0,0.65,0)  
+k.backgroundtransparency=1  
+k.text="made by silas"  
+k.textcolor3=color3.fromrgb(150,150,150)  
+k.textscaled=true  
+k.font=enum.font.gotham  
+k.parent=i  
+if not b.touchenabled and b.keyboardenabled then  
+	h:destroy()  
+	local l=instance.new("screengui")  
+	l.ignoreguiinset=true  
+	l.resetonspawn=false  
+	l.parent=d:waitforchild("playergui")  
+	local m=instance.new("frame")  
+	m.size=udim2.new(1,0,1,0)  
+	m.position=udim2.new(0,0,0,0)  
+	m.backgroundcolor3=color3.new(0,0,0)  
+	m.parent=l  
+	local n=instance.new("textlabel")  
+	n.size=udim2.new(1,0,1,0)  
+	n.position=udim2.new(0,0,0,0)  
+	n.backgroundtransparency=1  
+	n.text="use m key"  
+	n.textcolor3=color3.new(1,1,1)  
+	n.font=enum.font.arcade  
+	n.textscaled=true  
+	n.parent=m  
+	task.delay(1,function()  
+		l:destroy()  
+	end)  
+end  
+local o=nil  
+i.inputbegan:connect(function(p)  
+	if p.userinputtype==enum.userinputtype.mousebutton1 or p.userinputtype==enum.userinputtype.touch then  
+		o=p.position  
 	end  
 end)  
-i.InputEnded:Connect(function(m)  
-	if l and (m.UserInputType==Enum.UserInputType.MouseButton1 or m.UserInputType==Enum.UserInputType.Touch) then  
-		local n=m.Position  
-		if (n-l).Magnitude<5 then  
+i.inputended:connect(function(p)  
+	if o and (p.userinputtype==enum.userinputtype.mousebutton1 or p.userinputtype==enum.userinputtype.touch) then  
+		local q=p.position  
+		if (q-o).magnitude<5 then  
 			g=not g  
-			j.Text=g and "Tap to Teleport" or "Teleport"  
+			j.text=g and "tap to teleport" or "teleport"  
 		end  
-		l=nil  
+		o=nil  
 	end  
 end)  
-local function o()  
-	return Vector3.new(0,2.5+math.random()*2,0)  
+local function r()  
+	return vector3.new(0,2.5+math.random()*2,0)  
 end  
-local function p(q)  
-	local r=d.Character  
-	if not r then return end  
-	local s=r:FindFirstChild("HumanoidRootPart")  
-	if not s then return end  
-	local t=q+o()  
+local function s(t)  
+	local u=d.character  
+	if not u then return end  
+	local v=u:findfirstchild("humanoidrootpart")  
+	if not v then return end  
+	local w=t+r()  
 	if f then  
-		f:FireServer(t)  
+		f:fireserver(w)  
 	else  
-		s.CFrame=CFrame.new(t)  
+		v.cframe=cframe.new(w)  
 	end  
 end  
-b.InputBegan:Connect(function(u,v)  
-	if v then return end  
-	if u.UserInputType==Enum.UserInputType.Keyboard and u.KeyCode==Enum.KeyCode.M then  
-		if e.Hit then p(e.Hit.Position) end  
+b.inputbegan:connect(function(x,y)  
+	if y then return end  
+	if x.userinputtype==enum.userinputtype.keyboard and x.keycode==enum.keycode.m then  
+		if e.hit then s(e.hit.position) end  
 	end  
-	if g and (u.UserInputType==Enum.UserInputType.MouseButton1 or u.UserInputType==Enum.UserInputType.Touch) then  
-		if e.Hit then p(e.Hit.Position) end  
+	if g and (x.userinputtype==enum.userinputtype.mousebutton1 or x.userinputtype==enum.userinputtype.touch) then  
+		if e.hit then s(e.hit.position) end  
 		g=false  
-		j.Text="Teleport"  
+		j.text="teleport"  
 	end  
 end)  
---Made By Silas
-
+--made by silas
